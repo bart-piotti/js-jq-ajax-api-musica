@@ -6,31 +6,32 @@ $(document).ready(function() {
         'url': 'https://flynn.boolean.careers/exercises/api/array/music',
         'method': 'GET',
         'success': function(data) {
+            //Creo un array che contiene gli oggetti della chiamata
             var musica = data.response
             console.log(musica);
+            //Creo un array per salvare i generi musicali presenti
             var generi = [];
+            //Inserisco nell'array i generi musicali
             for (var i = 0; i < musica.length; i++) {
                 if (!generi.includes(musica[i].genre)) {
                     generi.push(musica[i].genre)
                 }
             }
 
+            //Ciclo i generi musicali e per ognuno inserisco i relativi dischi in pagina
             for (var x = 0; x < generi.length; x++) {
+                //Appende in pagina i dischi, un genere alla volta
                 for (var i = 0; i < musica.length; i++) {
                     if (generi[x] == musica[i].genre) {
-                        autore = musica[i].author;
-                        titolo = musica[i].title;
-                        anno = musica[i].year;
-                        link = musica[i].poster;
-                        genere = musica[i].genre
-
+                        //Inserisco i dati ricevuti dalla chiamata ajax nel template handlebars
                         context = {
-                            link: link,
-                            titolo: titolo,
-                            autore: autore,
-                            anno: anno,
-                            genere: genere
+                            link: musica[i].poster,
+                            titolo: musica[i].title,
+                            autore: musica[i].author,
+                            anno: musica[i].year,
+                            genere: musica[i].genre
                         }
+                        //Salvo il template con i parametri attuali (html) e lo appendo
                         html = template(context)
                         $('.cds-container').append(html)
                     }
@@ -42,10 +43,13 @@ $(document).ready(function() {
         }
     });
 
+//Click su un genere per fare toggle dei dischi ai quali corrisponde
     $('.generi div').click(function(){
         $(this).children('.fa-eye').toggle()
         $(this).children('.fa-eye-slash').toggle()
-        genere = '.' + $(this).children('h2').text()
-        $(genere).toggle()
+        //Creo una stringa '[genere su cui ho cliccato]' per richiamare la classe che mi serve
+        genere = $(this).children('h2').text()
+        //Toggle degli elementi con la classe corrispondente all'elemento che ho cliccato (this)
+        $('.' + genere).toggle()
     })
 });
