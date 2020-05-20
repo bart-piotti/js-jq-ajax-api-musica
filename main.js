@@ -8,35 +8,58 @@ $(document).ready(function() {
         'success': function(data) {
             //Creo un array che contiene gli oggetti della chiamata
             var musica = data.response
-            console.log(musica);
-            //Creo un array per salvare i generi musicali presenti
-            var generi = [];
-            //Inserisco nell'array i generi musicali
+
+            //Ordina l'array per data di uscita
+            musica.sort(function(a, b){
+                return a.year-b.year
+            })
+
             for (var i = 0; i < musica.length; i++) {
-                if (!generi.includes(musica[i].genre)) {
-                    generi.push(musica[i].genre)
+                //Inserisco i dati ricevuti dalla chiamata ajax nel template handlebars
+                context = {
+                    link: musica[i].poster,
+                    titolo: musica[i].title,
+                    autore: musica[i].author,
+                    anno: musica[i].year,
+                    genere: musica[i].genre
                 }
+                //Salvo il template con i parametri attuali (html) e lo appendo
+                html = template(context)
+                $('.new-old').prepend(html)
+                $('.old-new').append(html)
             }
 
-            //Ciclo i generi musicali e per ognuno inserisco i relativi dischi in pagina
-            for (var x = 0; x < generi.length; x++) {
-                //Appende in pagina i dischi, un genere alla volta
-                for (var i = 0; i < musica.length; i++) {
-                    if (generi[x] == musica[i].genre) {
-                        //Inserisco i dati ricevuti dalla chiamata ajax nel template handlebars
-                        context = {
-                            link: musica[i].poster,
-                            titolo: musica[i].title,
-                            autore: musica[i].author,
-                            anno: musica[i].year,
-                            genere: musica[i].genre
-                        }
-                        //Salvo il template con i parametri attuali (html) e lo appendo
-                        html = template(context)
-                        $('.cds-container').append(html)
-                    }
-                }
-            }
+// //-------------ORDINA PER GENERE---------------
+//             //Creo un array per salvare i generi musicali presenti
+//             var generi = [];
+//             //Inserisco nell'array i generi musicali
+//             for (var i = 0; i < musica.length; i++) {
+//                 if (!generi.includes(musica[i].genre)) {
+//                     generi.push(musica[i].genre)
+//                 }
+//             }
+//
+//             //Ciclo i generi musicali e per ognuno inserisco i relativi dischi in pagina
+//             for (var x = 0; x < generi.length; x++) {
+//                 //Appende in pagina i dischi, un genere alla volta
+//                 for (var i = 0; i < musica.length; i++) {
+//                     if (generi[x] == musica[i].genre) {
+//                         //Inserisco i dati ricevuti dalla chiamata ajax nel template handlebars
+//                         context = {
+//                             link: musica[i].poster,
+//                             titolo: musica[i].title,
+//                             autore: musica[i].author,
+//                             anno: musica[i].year,
+//                             genere: musica[i].genre
+//                         }
+//                         //Salvo il template con i parametri attuali (html) e lo appendo
+//                         html = template(context)
+//                         $('.cds-container').append(html)
+//                     }
+//                 }
+//             }
+// //-------------/ORDINA PER GENERE---------------
+
         },
         'error': function() {
             alert('si è verificato un errore');
@@ -53,3 +76,9 @@ $(document).ready(function() {
         $('.' + genere).toggle()
     })
 });
+
+$('.ordina-data p').click(function(){
+    $('.old-new').toggleClass('flex')
+    $('.new-old').toggleClass('flex')
+    $('.ordina-data i').toggle()
+})
