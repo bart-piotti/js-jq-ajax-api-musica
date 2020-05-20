@@ -66,3 +66,28 @@ header img {
 .cd span.year {
     color: grey;
 }
+
+.fa-eye-slash {
+    display: none;
+}
+
+.generi {
+    margin: auto;
+    display: flex;
+    color: white;
+    justify-content: center;
+}
+
+.generi div {
+    margin: 70px 70px 0px;
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+    justify-content: center;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.generi div i {
+    font-size: 20px;
+}

@@ -13,12 +13,14 @@ $(document).ready(function() {
                 titolo = musica[i].title;
                 anno = musica[i].year;
                 link = musica[i].poster;
+                genere = musica[i].genre
 
                 context = {
                     link: link,
                     titolo: titolo,
                     autore: autore,
-                    anno: anno
+                    anno: anno,
+                    genere: genere
                 }
                 html = template(context)
                 $('.cds-container').append(html)
@@ -28,4 +30,11 @@ $(document).ready(function() {
             alert('si è verificato un errore');
         }
     });
+
+    $('.generi div').click(function(){
+        $(this).children('.fa-eye').toggle()
+        $(this).children('.fa-eye-slash').toggle()
+        genere = '.' + $(this).children('h2').text()
+        $(genere).toggle()
+    })
 });
