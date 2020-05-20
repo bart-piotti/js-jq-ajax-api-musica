@@ -8,22 +8,33 @@ $(document).ready(function() {
         'success': function(data) {
             var musica = data.response
             console.log(musica);
+            var generi = [];
             for (var i = 0; i < musica.length; i++) {
-                autore = musica[i].author;
-                titolo = musica[i].title;
-                anno = musica[i].year;
-                link = musica[i].poster;
-                genere = musica[i].genre
-
-                context = {
-                    link: link,
-                    titolo: titolo,
-                    autore: autore,
-                    anno: anno,
-                    genere: genere
+                if (!generi.includes(musica[i].genre)) {
+                    generi.push(musica[i].genre)
                 }
-                html = template(context)
-                $('.cds-container').append(html)
+            }
+
+            for (var x = 0; x < generi.length; x++) {
+                for (var i = 0; i < musica.length; i++) {
+                    if (generi[x] == musica[i].genre) {
+                        autore = musica[i].author;
+                        titolo = musica[i].title;
+                        anno = musica[i].year;
+                        link = musica[i].poster;
+                        genere = musica[i].genre
+
+                        context = {
+                            link: link,
+                            titolo: titolo,
+                            autore: autore,
+                            anno: anno,
+                            genere: genere
+                        }
+                        html = template(context)
+                        $('.cds-container').append(html)
+                    }
+                }
             }
         },
         'error': function() {
