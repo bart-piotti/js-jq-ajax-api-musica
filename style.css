@@ -100,16 +100,21 @@ header img {
     display: none;
 }
 
-.ordina-data {
+.ordina {
+    display: flex;
+    justify-content: center;
+}
+.ordina-data, .ordina-genere {
     display: flex;
     justify-content: center;
     color: white;
     align-items: center;
     margin-top: 100px;
     margin-bottom: 15px;
+    padding: 40px;
 }
 
-.ordina-data p {
+.ordina-data p, .ordina-genere p {
     margin-right: 7px;
     text-decoration: underline;
     cursor: pointer;
